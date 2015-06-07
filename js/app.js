@@ -48,7 +48,7 @@ $(document).ready(function() {
         $.ajax("http://getridapi.azurewebsites.net/api/Account/Register", {
             data: ko.toJSON({
               UserName: self.UserName,
-              Email: "dummy10@email.com",
+              Email: "dummy11@email.com",
               Suburb: "Mt. Vic",
               Password: self.Password,
               ConfirmPassword: self.Password
