@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>GetRid</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/sb-admin.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav id="top-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation" data-bind="visible: showNavBar">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+
+                <img class="logo-long" src="img/GetRidLong.png">
+            </div>
+            <!-- Top Menu Items -->
+
+            <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav side-nav">
+                    <li>
+                        <a data-bind="click: $root.browseNearYou"><i class="fa fa-location-arrow"></i> Browse Near You</a>
+                    </li>
+                    <li>
+                        <a data-bind="click: $root.goToDisplay"><i class="fa fa-globe"></i>Search Locations</a>
+                    </li>
+                    <li>
+                        <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-shopping-cart"></i> Search Categories <i class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="demo" class="collapse">
+                            <li>
+                                <a href="#">Household Items</a>
+                            </li>
+                            <li>
+                                <a href="#">Furniture</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a data-bind="click: $root.goToGetRid"><i class="fa fa-trash-o"></i> Get rid of stuff</a>
+                    </li>
+                    <li>
+                        <a id="list" href="#"><i class="fa fa-fw fa-wrench"></i> Help</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </nav>
+
+        <div id="page-wrapper">
+
+            <div class="container-fluid">
+
+                <!-- Page Heading -->
+                <div class="row">
+
+
+                    <!-- DISPLAYS -->
+<!--                     <ul data-bind="foreach: displays" style="list-style: none">
+                         <li>
+                            <a data-bind="text: $data, click: $root.goToDisplay"></a>
+                         </li>
+                    </ul> -->
+
+                    <!-- SPLASH SCREEN -->
+                    <div data-bind="visible: showSplashScreen">
+                        <div class="row">
+                            <div class="col-sm-4 col-lg-4 col-md-4">
+
+                                <div class="thumbnail item-text">
+                                    <img class="flash-image" src="img/GetRidCircle.png" alt="">
+                                    <p><button data-bind="click: $root.signIn" class="btn btn-primary">SIGN IN</button></p>
+                                    <p><button id="signup"data-bind="click: $root.signUp" class="btn btn-primary">SIGN UP</button></p>
+                                    <div class="caption">
+                                    </div>
+                                    <div class="ratings">
+                                        <a data-bind="click: $root.browseNearYou"><h1><i class="fa fa-location-arrow"></i> </h1></a>
+                                        <a id="browseNearYou" data-bind="click: $root.browseNearYou"><h4>Browse Near You </h4></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SIGN UP / SIGN IN FORM -->
+                    <div data-bind="visible: showSignInSignUpForm"> <!-- data-bind="with: getRidData" -->
+                        <div class="row item-text">
+                            <div class="col-sm-4 col-lg-4 col-md-4">
+                                <img class="logo-name" src="img/GetRidName.png">
+                                <form>
+                                    <p><input type="text" data-bind="value: UserName" placeholder="Username"></p>
+                                    <p><input type="password" data-bind="value: Password" placeholder="Password"></p>
+                                    <p><input type="submit" id="sign-in" data-bind="click: $root.handleSignIn" value="Sign In" class="btn btn-primary"></p>
+                                    <p><input type="submit" id="sign-up" data-bind="click: $root.handleSignUp" value="Sign Up" class="btn btn-primary"></p>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- SIGN UP / SIGN IN FORM END-->
+
+                    <!-- ITEMS LIST -->
+                    <table class="items" data-bind="with: chosenDisplayData">
+                        <thead><tr>
+                            <th>Name</th><th>Description</th><th>Location</th><th>Category</th>
+                        </tr></thead>
+                        <tbody data-bind="foreach: self.itemData">
+                            <tr data-bind="click: $root.goToItem">
+                                <td data-bind="text: name"></td>
+                                <td data-bind="text: description"></td>
+                                <td data-bind="text: location"></td>
+                                <td data-bind="text: category"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+                    <!--INDIVIDUAL ITEM -->
+                    <div data-bind="with: chosenIndividualData">
+                        <div class="row">
+                            <div class="col-sm-4 col-lg-4 col-md-4">
+                                <div class="thumbnail">
+                                    <h1 class="item-text" data-bind="text: Name"></h1>
+                                    <!-- <img class="item-image" data-bind="attr: {src: image }" alt=""> -->
+                                    <div class="caption">
+
+                                        <h4 class="item-text"><a href="#">5 km away</a>
+                                        </h4>
+                                    </div>
+                                    <div class="ratings">
+                                        <a data-bind="click: $root.treasure"><i class="fa fa-star"></i> Treasure</a>
+                                        <a data-bind="click: $root.trash" class="pull-right">Trash <i class="fa fa-trash-o"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--INDIVIDUAL ITEM END  -->
+
+                    <!--ITEM DETAILS DISPLAY -->
+                    <div data-bind="with: chosenIndividualDetails">
+                        <div class="row">
+                            <div class="col-sm-4 col-lg-4 col-md-4">
+                                <div class="thumbnail">
+                                    <!-- <img data-bind="attr: {src: image }" alt=""> -->
+                                    <div class="caption">
+                                        <h3 class="item-text" data-bind="text: Name"></h3>
+                                        <h4 class="item-text" data-bind="text: Description"</h4>
+                                    </div>
+                                    <div class="ratings">
+                                        <a data-bind="click: $root.goToDisplay"><i class="fa fa-arrow-circle-left"></i> Back </a>
+                                        <a data-bind="click: $root.makeContact" class="pull-right">Get <i class="fa fa-shopping-cart"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--ITEM DETAILS DISPLAY END-->
+
+                    <!-- GET RID FORM -->
+                    <div data-bind="visible: showGetRidForm"> <!-- data-bind="with: getRidData" -->
+                        <div class="row item-text">
+                            <div class="col-sm-4 col-lg-4 col-md-4">
+                                <img class="logo-circles" src="img/GetRidCircles.png">
+                                <form action="#" method="post">
+                                    <p><input type="text" placeholder="Item Name"></p>
+                                    <p><input type="text" placeholder="Category"></p>
+                                    <p><input type="text" placeholder="Location"></p>
+                                    <p><input type="text" placeholder="Image"></p>
+                                    <p><input type="textarea" placeholder="Description"></p>
+                                    <p><input type="submit" value="Submit" class="btn btn-primary"></p>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- GET RID FORM END-->
+
+                    <!--CONTACT DISPLAY -->
+<!--                     <div data-bind="with: makeContact">
+                        <div class="row">
+                            <div class="col-sm-4 col-lg-4 col-md-4">
+                                <div class="thumbnail">
+
+                                        <h3 class="item-text" data-bind="text: name"></h3>
+                                        <h1>Message Owner</h1>
+                                    </div>
+                                    <div class="ratings">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                    <!--CONTACT END-->
+
+                </div>
+                <!-- /.row -->
+                <nav class="navbar navbar-inverse navbar-fixed-bottom" role="navigation" data-bind="visible: showNavBar">
+                <ul class="nav top-nav">
+                    <li>
+                        <a data-bind="click: $root.browseNearYou"><i class="fa fa-location-arrow"></i></a>
+                    </li>
+                    <li>
+                        <a data-bind="click: $root.goToDisplay"><i class="fa fa-globe"></i></a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-shopping-cart"></i></a>
+                        <ul id="demo" class="dropdown-menu">
+                            <li>
+                                <a href="#"><i class="fa fa-home"></i> Household</a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-meh-o"></i> Furniture</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a data-bind="click: $root.goToGetRid"><i class="fa fa-trash-o"></i></a>
+                    </li>
+                </ul>
+            </nav>
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+    <script type='text/javascript' src='js/knockout-3.3.0.js'></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/app.js"></script>
+
+</body>
+
+</html>
