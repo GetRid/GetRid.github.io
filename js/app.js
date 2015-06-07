@@ -68,6 +68,9 @@ $(document).ready(function() {
             Accept: "*/*",
             type: "post",
             contentType: "application/x-www-form-urlencoded",
+            xhrFields: {
+              withCredentials: true
+            },
             data: data
           })
           .done(function(result) {
